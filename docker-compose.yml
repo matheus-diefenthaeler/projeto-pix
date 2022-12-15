@@ -1,36 +1,37 @@
-version: "3.3"
+version: '3.3'
 
 services:
-  itau:
-    container_name: banco-itau
-    build:
-      context: ./BancoItau
-      dockerfile: Dockerfile
+  prometheus:
+    container_name: pix-prometheus
+    image: prom/prometheus
     restart: always
+    ports:
+      - 9090:9090
     networks:
       - backend
-    depends_on:
-      - eureka
+    volumes:
+      - ./prometheus/:/etc/prometheus/
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
 
-  bacen:
-    container_name: bacen
-    build:
-      context: ./bacen
-      dockerfile: Dockerfile
+  grafana:
+    container_name: pix-grafana
+    image: grafana/grafana
     restart: always
     networks:
       - backend
+    ports:
+      - '3000:3000'
+    volumes:
+      - ./grafana/datasources:/etc/grafana/provisioning/datasources
+      - ./grafana/dashboards:/etc/grafana/provisioning/dashboards
+    environment:
+      - GF_SERVER_PROTOCOL=http
+      - GF_SERVER_HTTP_PORT=3000
+      - GF_ADMIN_USER=grafana
+      - GF_ADMIN_PASSWORD=grafana
     depends_on:
-      - eureka
-
-  eureka:
-    container_name: eureka
-    build:
-      context: ./eureka
-      dockerfile: Dockerfile
-    restart: always
-    networks:
-      - backend
+      - prometheus
 
 networks:
   backend:
