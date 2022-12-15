@@ -1,0 +1,36 @@
+version: "3.3"
+
+services:
+  itau:
+    container_name: banco-itau
+    build:
+      context: ./BancoItau
+      dockerfile: Dockerfile
+    restart: always
+    networks:
+      - backend
+    depends_on:
+      - eureka
+
+  bacen:
+    container_name: bacen
+    build:
+      context: ./bacen
+      dockerfile: Dockerfile
+    restart: always
+    networks:
+      - backend
+    depends_on:
+      - eureka
+
+  eureka:
+    container_name: eureka
+    build:
+      context: ./eureka
+      dockerfile: Dockerfile
+    restart: always
+    networks:
+      - backend
+
+networks:
+  backend:

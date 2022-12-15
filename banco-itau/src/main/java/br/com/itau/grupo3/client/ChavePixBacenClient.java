@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
-@FeignClient(name = "chavePix", url = "http://localhost:8080")
+@FeignClient("bacen")
 public interface ChavePixBacenClient {
 
     @GetMapping("/chave-pix/{chavePix}")
