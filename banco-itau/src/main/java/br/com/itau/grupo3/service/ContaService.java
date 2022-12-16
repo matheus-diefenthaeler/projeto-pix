@@ -27,20 +27,19 @@ public class ContaService {
 
     @Transactional
     public ContaResponse adicionar(ContaRequest contaRequest) {
-        Banco banco = bancoRepository.findAll()
-                .stream()
-                .findFirst()
-                .orElseThrow(() -> {
+        Banco banco = bancoRepository.findById(1L).orElseThrow(() -> {
             throw new BancoNaoExistenteException();
         });
+
         Conta conta = contaMapper.requestToModel(contaRequest);
         conta.setBanco(banco);
-        return new ContaResponse(contaRepository.save(conta));
+         return contaMapper.modelToResponse(contaRepository.save(conta));
     }
 
     public List<ContaResponse> listar() {
         List<Conta> contas = contaRepository.findAll();
-        return contas.stream().map(ContaResponse::new).collect(Collectors.toList());
+        return contas.stream().map(contaMapper::modelToResponse)
+                .collect(Collectors.toList());
     }
 
     public Conta buscarPorId(Long id) {
@@ -55,7 +54,8 @@ public class ContaService {
     public ContaResponse buscarPorAgenciaEConta(AgenciaEContaRequest agenciaEContaRequest) {
         Conta conta = contaRepository.findByAgenciaAndNumeroConta(agenciaEContaRequest.getAgencia(), agenciaEContaRequest.getNumeroConta())
                 .orElseThrow(() -> new ContaNaoEncontradaException("Conta nao encontrada!"));
-        return new ContaResponse(conta);
+       return contaMapper.modelToResponse(conta);
+
     }
 }
 

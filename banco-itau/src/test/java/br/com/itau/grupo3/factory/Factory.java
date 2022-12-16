@@ -1,8 +1,10 @@
 package br.com.itau.grupo3.factory;
 
 import br.com.itau.grupo3.dto.ChavePixBacenDTO;
+import br.com.itau.grupo3.dto.request.AgenciaEContaRequest;
 import br.com.itau.grupo3.dto.request.ChavePixRequest;
 import br.com.itau.grupo3.dto.request.ContaRequest;
+import br.com.itau.grupo3.dto.response.ContaResponse;
 import br.com.itau.grupo3.model.*;
 
 
@@ -28,6 +30,19 @@ public class Factory {
                 TipoConta.CORRENTE,
                 new Titular(1L, "João", "43504726067", TipoPessoa.PF)
         );
+
+    }
+
+    public static ContaResponse createContaResponse() {
+        ContaResponse contaResponse = new ContaResponse();
+        contaResponse.setId(1L);
+        contaResponse.setAgencia("1234");
+        contaResponse.setNumeroConta("1234");
+        contaResponse.setTipo("CORRENTE");
+        contaResponse.setBanco("Itau");
+        contaResponse.setTitular("Caique");
+
+        return contaResponse;
     }
 
     public static ChavePixRequest createChavePixRequest() {
@@ -61,9 +76,17 @@ public class Factory {
         return new Banco(2L, "123", "Itau");
     }
 
-    public static List<Banco> createBancoList(){
+    public static List<Banco> createBancoList() {
         List<Banco> bancoList = new ArrayList<>();
         bancoList.add(createBanco());
         return bancoList;
     }
+
+    public static AgenciaEContaRequest createAgenciaEContaRequest() {
+        AgenciaEContaRequest agenciaEContaRequest = new AgenciaEContaRequest();
+        agenciaEContaRequest.setAgencia("1234");
+        agenciaEContaRequest.setNumeroConta("12345");
+        return agenciaEContaRequest;
+    }
+
 }
