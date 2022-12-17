@@ -1,0 +1,14 @@
+package br.com.ada.grupo3.client.dto.request;
+
+import lombok.Getter;
+import lombok.Setter;
+
+import java.math.BigDecimal;
+
+@Getter
+@Setter
+public class ContaParaCreditarBacenRequest {
+    private String agencia;
+    private String numeroConta;
+    private BigDecimal valorParaCreditar;
+}

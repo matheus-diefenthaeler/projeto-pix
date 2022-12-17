@@ -1,0 +1,55 @@
+package br.com.ada.grupo3.service;
+
+import br.com.ada.grupo3.client.BacenClient;
+import br.com.ada.grupo3.client.dto.ChavePixBacen;
+import br.com.ada.grupo3.dto.request.ChavePixRequest;
+import br.com.ada.grupo3.dto.response.ChavePixResponse;
+import br.com.ada.grupo3.exception.CadastroChavePixException;
+import br.com.ada.grupo3.exception.ChaveNaoEncontradaException;
+import br.com.ada.grupo3.mapper.ChavePixMapper;
+import br.com.ada.grupo3.model.ChavePix;
+import br.com.ada.grupo3.model.Conta;
+import br.com.ada.grupo3.repository.ChavePixRepository;
+import feign.FeignException;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+
+@Service
+@RequiredArgsConstructor
+public class ChavePixService {
+
+    private final BacenClient chavePixBacenClient;
+    private final ChavePixRepository chavePixRepository;
+    private final ChavePixMapper chavePixMapper;
+    private final ContaService contaService;
+
+    public ChavePixResponse salvar(ChavePixRequest chavePixRequest) {
+        try {
+            Conta conta = contaService.buscarPorId(chavePixRequest.getContaId());
+            ChavePixBacen chavePixBacenDTO = chavePixMapper.requestToBacen(chavePixRequest, conta);
+            chavePixBacenClient.cadastrarChavePix(chavePixBacenDTO);
+            ChavePix chavePix = chavePixMapper.requestToModel(chavePixRequest, conta);
+            return chavePixMapper.modelToResponse(chavePixRepository.save(chavePix));
+        } catch (FeignException.BadRequest e) {
+            throw new CadastroChavePixException();
+        }
+    }
+    public ChavePixBacen detalharChavePix(String chavePix) {
+        try {
+            return chavePixBacenClient.detalharChavePix(chavePix);
+        } catch (FeignException.NotFound e) {
+            throw new ChaveNaoEncontradaException();
+        }
+    }
+
+    public ChavePix buscarChavePix(String chavePix) {
+        return chavePixRepository.findById(chavePix).orElseThrow(() -> {
+            throw new ChaveNaoEncontradaException();
+        });
+    }
+
+    public Boolean validarChavePix(Conta conta, String chavePix) {
+        ChavePix chavePixSalva = buscarChavePix(chavePix);
+        return chavePixSalva.getConta() == conta;
+    }
+}

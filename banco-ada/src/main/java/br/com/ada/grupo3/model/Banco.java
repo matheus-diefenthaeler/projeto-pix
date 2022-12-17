@@ -1,4 +1,4 @@
-package br.com.itau.grupo3.model;
+package br.com.ada.grupo3.model;
 
 
 import jakarta.persistence.Entity;

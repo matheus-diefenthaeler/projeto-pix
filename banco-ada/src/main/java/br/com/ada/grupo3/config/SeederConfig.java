@@ -1,7 +1,7 @@
-package br.com.itau.grupo3.config;
+package br.com.ada.grupo3.config;
 
-import br.com.itau.grupo3.model.Banco;
-import br.com.itau.grupo3.repository.BancoRepository;
+import br.com.ada.grupo3.model.Banco;
+import br.com.ada.grupo3.repository.BancoRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
@@ -14,8 +14,8 @@ public class SeederConfig implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        String nomeBanco = "ITAÚ UNIBANCO S.A.";
-        String codigobacen = "184";
+        String nomeBanco = "ADA LETS CODE S.A.";
+        String codigobacen = "987";
 
         Banco banco = new Banco(1L, codigobacen, nomeBanco);
 

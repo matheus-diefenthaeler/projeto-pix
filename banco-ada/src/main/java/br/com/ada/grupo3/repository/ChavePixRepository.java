@@ -1,6 +1,6 @@
-package br.com.itau.grupo3.repository;
+package br.com.ada.grupo3.repository;
 
-import br.com.itau.grupo3.model.ChavePix;
+import br.com.ada.grupo3.model.ChavePix;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
