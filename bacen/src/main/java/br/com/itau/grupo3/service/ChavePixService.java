@@ -18,11 +18,7 @@ public class ChavePixService {
     private final ChavePixMapper mapper;
 
     public ChavePixResponse salvar(ChavePixRequest chavePixRequest) {
-        if (isChaveCadastrada(
-                chavePixRequest.getChave(),
-                chavePixRequest.getAgencia(),
-                chavePixRequest.getNumeroConta())
-        ) {
+        if (isChaveCadastrada(chavePixRequest.getChave())) {
             throw new ChavePixJaCadastradaException();
         }
 
@@ -42,7 +38,7 @@ public class ChavePixService {
         return mapper.modelToResponse(chavePix);
     }
 
-    private boolean isChaveCadastrada(String chave, String agencia, String numeroConta) {
-        return chavePixRepository.findById(chave, String.format("%s#%s", agencia, numeroConta)).isPresent();
+    private boolean isChaveCadastrada(String chave) {
+        return chavePixRepository.findById(chave).isPresent();
     }
 }

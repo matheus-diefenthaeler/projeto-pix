@@ -45,12 +45,5 @@ public class ChavePixRepository extends BaseRepository<ChavePix> {
 
         Iterator<Item> itemsIter = items.iterator();
         return itemsIter.hasNext();
-
-
-//        List<String> list = new ArrayList<>();
-//        items.iterator().forEachRemaining(item -> list.add(String.valueOf(item)));
-//
-//        list.forEach(System.out::println);
-
     }
 }

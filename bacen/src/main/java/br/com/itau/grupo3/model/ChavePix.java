@@ -13,7 +13,6 @@ public class ChavePix {
     @DynamoDBHashKey
     private String chave;
 
-    @DynamoDBRangeKey
     private String conta;
 
     @DynamoDBTypeConvertedEnum
