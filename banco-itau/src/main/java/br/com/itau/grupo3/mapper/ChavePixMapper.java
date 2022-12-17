@@ -1,7 +1,7 @@
 package br.com.itau.grupo3.mapper;
 
 
-import br.com.itau.grupo3.dto.ChavePixBacenDTO;
+import br.com.itau.grupo3.client.dto.ChavePixBacen;
 import br.com.itau.grupo3.dto.request.ChavePixRequest;
 import br.com.itau.grupo3.dto.response.ChavePixResponse;
 import br.com.itau.grupo3.model.ChavePix;
@@ -11,14 +11,14 @@ import org.springframework.stereotype.Component;
 @Component
 public class ChavePixMapper {
 
-    public ChavePixBacenDTO requestToBacen(ChavePixRequest chavePixRequest, Conta conta) {
-        ChavePixBacenDTO chavePixBacenDTO = new ChavePixBacenDTO();
+    public ChavePixBacen requestToBacen(ChavePixRequest chavePixRequest, Conta conta) {
+        ChavePixBacen chavePixBacenDTO = new ChavePixBacen();
 
         chavePixBacenDTO.setChave(chavePixRequest.getChave());
         chavePixBacenDTO.setTipo(chavePixRequest.getTipo());
         chavePixBacenDTO.setTipoConta(conta.getTipo());
         chavePixBacenDTO.setAgencia(conta.getAgencia());
-        chavePixBacenDTO.setConta(conta.getNumeroConta());
+        chavePixBacenDTO.setNumeroConta(conta.getNumeroConta());
         chavePixBacenDTO.setInstituicaoFinanceira(conta.getBanco().getNome());
         chavePixBacenDTO.setChave(chavePixRequest.getChave());
         chavePixBacenDTO.setTitular(conta.getTitular().getNome());

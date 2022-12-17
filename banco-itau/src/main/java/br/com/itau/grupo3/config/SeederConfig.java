@@ -13,17 +13,14 @@ public class SeederConfig implements CommandLineRunner {
 
     private final BancoRepository bancoRepository;
 
-    @Value("${banco.nome}")
-    private String nomeBanco;
-
-    @Value("${banco.codigobacen:}")
-    private String codigobacen;
-
     @Override
     public void run(String... args) throws Exception {
+        String nomeBanco = "ITAÚ UNIBANCO S.A.";
+        String codigobacen = "184";
+
         Banco banco = new Banco(1L, codigobacen, nomeBanco);
 
-        if (bancoRepository.count() == 0) {
+        if (!bancoRepository.existsById(1l)) {
             bancoRepository.save(banco);
         }
     }

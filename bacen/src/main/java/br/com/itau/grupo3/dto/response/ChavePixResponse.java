@@ -12,7 +12,7 @@ public class ChavePixResponse {
     private TipoChavePix tipo;
     private TipoConta tipoConta;
     private String agencia;
-    private String conta;
+    private String numeroConta;
     private String instituicaoFinanceira;
     private String titular;
     private String cpfCnpj;

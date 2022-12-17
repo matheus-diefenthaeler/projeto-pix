@@ -7,5 +7,5 @@ import org.springframework.stereotype.Repository;
 import java.util.UUID;
 
 @Repository
-public interface ChavePixRepository extends JpaRepository<ChavePix, UUID> {
+public interface ChavePixRepository extends JpaRepository<ChavePix, String> {
 }

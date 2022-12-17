@@ -4,6 +4,7 @@ import br.com.itau.grupo3.dto.request.ChavePixRequest;
 import br.com.itau.grupo3.dto.response.ChavePixResponse;
 import br.com.itau.grupo3.exception.ChavePixJaCadastradaException;
 import br.com.itau.grupo3.exception.ChavePixNaoEncontradaException;
+import br.com.itau.grupo3.exception.TipoChavePixJaCadastradaException;
 import br.com.itau.grupo3.mapper.ChavePixMapper;
 import br.com.itau.grupo3.model.ChavePix;
 import br.com.itau.grupo3.repository.ChavePixRepository;
@@ -17,9 +18,20 @@ public class ChavePixService {
     private final ChavePixMapper mapper;
 
     public ChavePixResponse salvar(ChavePixRequest chavePixRequest) {
-        if (isChaveCadastrada(chavePixRequest.getChave())) {
+        if (isChaveCadastrada(
+                chavePixRequest.getChave(),
+                chavePixRequest.getAgencia(),
+                chavePixRequest.getNumeroConta())
+        ) {
             throw new ChavePixJaCadastradaException();
         }
+
+        if (chavePixRepository.findByIndex(
+                String.format("%s#%s", chavePixRequest.getAgencia(), chavePixRequest.getNumeroConta()), chavePixRequest.getTipo().toString()
+        )) {
+            throw new TipoChavePixJaCadastradaException();
+        }
+
         ChavePix chavePix = mapper.requestToModel(chavePixRequest);
         ChavePix save = chavePixRepository.save(chavePix);
         return mapper.modelToResponse(save);
@@ -30,7 +42,7 @@ public class ChavePixService {
         return mapper.modelToResponse(chavePix);
     }
 
-    private boolean isChaveCadastrada(String chave) {
-        return chavePixRepository.findById(chave).isPresent();
+    private boolean isChaveCadastrada(String chave, String agencia, String numeroConta) {
+        return chavePixRepository.findById(chave, String.format("%s#%s", agencia, numeroConta)).isPresent();
     }
 }

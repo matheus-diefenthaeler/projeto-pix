@@ -29,7 +29,7 @@ public class Conta {
     @ManyToOne(cascade = CascadeType.PERSIST)
     private Titular titular;
     private BigDecimal saldo;
-    private BigDecimal saldoBloqueado;
+    private BigDecimal saldoBloqueado = new BigDecimal("0.0");
     private boolean contaBloqueada = false;
     @Column(name = "deleted", nullable = false)
     private boolean deleted = false;

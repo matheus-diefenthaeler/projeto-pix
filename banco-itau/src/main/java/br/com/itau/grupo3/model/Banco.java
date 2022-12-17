@@ -18,9 +18,7 @@ import lombok.Setter;
 public class Banco {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String codigoBacen;
     private String nome;
-
 }

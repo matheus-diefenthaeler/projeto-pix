@@ -1,6 +1,49 @@
 version: '3.3'
 
 services:
+#  eureka:
+#    container_name: eureka
+#    build:
+#      context: ./eureka
+#      dockerfile: Dockerfile
+#    restart: always
+#    networks:
+#      - backend
+#    ports:
+#      - 8761:8761
+#
+#  bacen:
+#    container_name: bacen
+#    build:
+#      context: ./bacen
+#      dockerfile: Dockerfile
+#    restart: always
+#    networks:
+#      - backend
+#    depends_on:
+#      - eureka
+#
+#  banco-itau:
+#    container_name: banco-itau
+#    build:
+#      context: ./banco-itau
+#      dockerfile: Dockerfile
+#    restart: always
+#    networks:
+#      - backend
+#    depends_on:
+#      - eureka
+
+  postgres:
+    image: postgres:15.1-alpine
+    container_name: postgres
+    environment:
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "1234"
+      POSTGRES_DB: "banco-itau"
+    ports:
+      - 5432:5432
+
   prometheus:
     container_name: pix-prometheus
     image: prom/prometheus
@@ -32,6 +75,16 @@ services:
       - GF_ADMIN_PASSWORD=grafana
     depends_on:
       - prometheus
+
+  dynamodb:
+    command: "-jar DynamoDBLocal.jar -sharedDb -dbPath ./data"
+    image: "amazon/dynamodb-local:latest"
+    container_name: dynamodb
+    ports:
+      - 8000:8000
+    volumes:
+      - "./data/dynamodb:/home/dynamodblocal/data"
+    working_dir: /home/dynamodblocal
 
 networks:
   backend:

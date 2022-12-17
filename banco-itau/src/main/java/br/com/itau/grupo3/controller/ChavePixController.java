@@ -1,7 +1,7 @@
 package br.com.itau.grupo3.controller;
 
 
-import br.com.itau.grupo3.dto.ChavePixBacenDTO;
+import br.com.itau.grupo3.client.dto.ChavePixBacen;
 import br.com.itau.grupo3.dto.request.ChavePixRequest;
 import br.com.itau.grupo3.dto.response.ChavePixResponse;
 import br.com.itau.grupo3.service.ChavePixService;
@@ -27,7 +27,7 @@ public class ChavePixController {
     }
 
     @GetMapping("/{chavePix}")
-    public ResponseEntity<ChavePixBacenDTO> detalharChavePix(@PathVariable String chavePix){
+    public ResponseEntity<ChavePixBacen> detalharChavePix(@PathVariable String chavePix){
         return ResponseEntity.ok(chavePixService.detalharChavePix(chavePix));
     }
 }

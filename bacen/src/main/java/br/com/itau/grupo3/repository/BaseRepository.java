@@ -2,6 +2,7 @@ package br.com.itau.grupo3.repository;
 
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBScanExpression;
+import com.amazonaws.services.dynamodbv2.document.Table;
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import lombok.RequiredArgsConstructor;
 
@@ -45,6 +46,8 @@ public abstract class BaseRepository<T> {
     public Optional<T> findById(String partitionKey) {
         return Optional.ofNullable(mapper.load(getClassType(), partitionKey));
     }
+
+
 
     public List<T> findByPartialId(String partitionKey) {
         Map<String, AttributeValue> eav = new HashMap<>();

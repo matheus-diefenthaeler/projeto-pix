@@ -15,13 +15,19 @@ import java.util.List;
 public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(value = {ChavePixJaCadastradaException.class})
     protected ResponseEntity<Object> handlerChavePixCadastradaException( RuntimeException ex, WebRequest request) {
-        CustomException exceptionDetail = new CustomException(List.of("Chave Pix já cadastrada"), HttpStatus.CONFLICT.value());
-        return handleExceptionInternal(ex, exceptionDetail, new HttpHeaders(), HttpStatus.CONFLICT, request);
+        CustomException exceptionDetail = new CustomException(List.of("Chave Pix já cadastrada"), HttpStatus.BAD_REQUEST.value());
+        return handleExceptionInternal(ex, exceptionDetail, new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
     }
 
     @ExceptionHandler(value = {ChavePixNaoEncontradaException.class})
     protected ResponseEntity<Object> handlerChavePixNaoEncontradaException( RuntimeException ex, WebRequest request) {
         CustomException exceptionDetail = new CustomException(List.of("Chave Pix não encontrada"), HttpStatus.NOT_FOUND.value());
         return handleExceptionInternal(ex, exceptionDetail, new HttpHeaders(), HttpStatus.NOT_FOUND, request);
+    }
+
+    @ExceptionHandler(value = {TipoChavePixJaCadastradaException.class})
+    protected ResponseEntity<Object> handlerTipoChavePixJaCadastradaException( RuntimeException ex, WebRequest request) {
+        CustomException exceptionDetail = new CustomException(List.of("Chave Pix não encontrada"), HttpStatus.BAD_REQUEST.value());
+        return handleExceptionInternal(ex, exceptionDetail, new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
     }
 }

@@ -2,6 +2,7 @@ package br.com.itau.grupo3.controller;
 
 import br.com.itau.grupo3.dto.request.ChavePixRequest;
 import br.com.itau.grupo3.dto.response.ChavePixResponse;
+import br.com.itau.grupo3.repository.ChavePixRepository;
 import br.com.itau.grupo3.service.ChavePixService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +17,7 @@ import java.net.URI;
 public class ChavePixController {
 
     private final ChavePixService chavePixService;
+    private final ChavePixRepository repository;
 
     @PostMapping
     public ResponseEntity<ChavePixResponse> cadastrar(@RequestBody ChavePixRequest chavePixRequest, UriComponentsBuilder uriComponentsBuilder) {
@@ -27,5 +29,11 @@ public class ChavePixController {
     @GetMapping("{chavePix}")
     public ResponseEntity<ChavePixResponse> detalhar(@PathVariable String chavePix){
         return ResponseEntity.ok(chavePixService.buscarPorChave(chavePix));
+    }
+
+    @GetMapping("/t")
+    public ResponseEntity<Boolean> t() {
+        Boolean result =  repository.findByIndex("1234#54321-6", "TELEFONE");
+        return ResponseEntity.ok(result);
     }
 }

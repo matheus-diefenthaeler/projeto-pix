@@ -13,9 +13,40 @@ import java.util.List;
 
 @RestControllerAdvice
 public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
-    @ExceptionHandler(value = {ChaveJaCadastradaBacenException.class})
-    protected ResponseEntity<Object> handleChavePixCadastradaException( RuntimeException ex, WebRequest request) {
-        CustomException exceptionDetail = new CustomException(List.of("Chave já cadastrada"), HttpStatus.CONFLICT.value());
-        return handleExceptionInternal(ex, exceptionDetail, new HttpHeaders(), HttpStatus.CONFLICT, request);
+    @ExceptionHandler(value = {CadastroChavePixException.class})
+    protected ResponseEntity<Object> handlerChavePixCadastradaException( RuntimeException ex, WebRequest request) {
+        CustomException exceptionDetail = new CustomException(List.of("Erro ao cadastrar chave pix. Chave ou tipo já cadastrado"), HttpStatus.BAD_REQUEST.value());
+        return handleExceptionInternal(ex, exceptionDetail, new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
     }
+
+    @ExceptionHandler(value = {ChaveNaoEncontradaException.class})
+    protected ResponseEntity<Object> handlerChaveNaoEncontradaException( RuntimeException ex, WebRequest request) {
+        CustomException exceptionDetail = new CustomException(List.of("Chave Pix não encontrada"), HttpStatus.NOT_FOUND.value());
+        return handleExceptionInternal(ex, exceptionDetail, new HttpHeaders(), HttpStatus.NOT_FOUND, request);
+    }
+
+    @ExceptionHandler(value = {ContaInvalidaException.class})
+    protected ResponseEntity<Object> handlerContaInvalidaException( RuntimeException ex, WebRequest request) {
+        CustomException exceptionDetail = new CustomException(List.of("Nao foi possivel realizar a transferencia. Conta Invalida!"), HttpStatus.BAD_REQUEST.value());
+        return handleExceptionInternal(ex, exceptionDetail, new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
+    }
+
+    @ExceptionHandler(value = {SaldoInsuficienteException.class})
+    protected ResponseEntity<Object> handlerSaldoInsuficienteException( RuntimeException ex, WebRequest request) {
+        CustomException exceptionDetail = new CustomException(List.of("Saldo Insuficiente!"), HttpStatus.BAD_REQUEST.value());
+        return handleExceptionInternal(ex, exceptionDetail, new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
+    }
+
+    @ExceptionHandler(value = {BancoNaoExistenteException.class})
+    protected ResponseEntity<Object> handlerBancoNaoExistenteException( RuntimeException ex, WebRequest request) {
+        CustomException exceptionDetail = new CustomException(List.of("Banco nao encontrado!"), HttpStatus.NOT_FOUND.value());
+        return handleExceptionInternal(ex, exceptionDetail, new HttpHeaders(), HttpStatus.NOT_FOUND, request);
+    }
+
+    @ExceptionHandler(value = {ConexaoComAplicacaoExternaException.class})
+    protected ResponseEntity<Object> handlerConexaoComAplicacaoExternaException( RuntimeException ex, WebRequest request) {
+        CustomException exceptionDetail = new CustomException(List.of("Erro ao tentar se comunicar com o Bacen!"), HttpStatus.INTERNAL_SERVER_ERROR.value());
+        return handleExceptionInternal(ex, exceptionDetail, new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR, request);
+    }
+
 }
