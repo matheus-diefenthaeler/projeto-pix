@@ -36,7 +36,7 @@ public class TransferenciaService {
             TransferenciaBacenResponse transferenciaBacenResponse = client.transferenciaPix(transferenciaBacenRequest).getBody();
             contaService.debitarValorBloquedo(conta, transferenciaRequest.getValor());
             return transferenciaBacenResponse;
-        } catch (FeignException.Conflict e) {
+        } catch (FeignException.Conflict | FeignException.BadRequest e) {
             contaService.desbloquearValor(conta, transferenciaRequest.getValor());
             throw new ContaInvalidaException();
         } catch (FeignException.InternalServerError e) {

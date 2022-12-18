@@ -30,4 +30,10 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
         CustomException exceptionDetail = new CustomException(List.of("Chave Pix não encontrada"), HttpStatus.BAD_REQUEST.value());
         return handleExceptionInternal(ex, exceptionDetail, new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
     }
+
+    @ExceptionHandler(value = {ContaInvalidaException.class})
+    protected ResponseEntity<Object> handlerContaInvalidaException( RuntimeException ex, WebRequest request) {
+        CustomException exceptionDetail = new CustomException(List.of("Nao foi possivel realizar a transferencia. Conta Invalida!"), HttpStatus.BAD_REQUEST.value());
+        return handleExceptionInternal(ex, exceptionDetail, new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
+    }
 }

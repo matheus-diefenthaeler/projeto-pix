@@ -10,7 +10,6 @@ public class TransferenciaRequest {
     private BigDecimal valor;
     private TipoTransferencia tipoTransferencia;
     private Long contaId;
-
     private String chavePix;
     private String nomeDestino;
     private String cpfCnpjDestino;

@@ -49,4 +49,10 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
         return handleExceptionInternal(ex, exceptionDetail, new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR, request);
     }
 
+    @ExceptionHandler(value = {ContaNaoEncontradaException.class})
+    protected ResponseEntity<Object> handlerContaNaoEncontradaException( RuntimeException ex, WebRequest request) {
+        CustomException exceptionDetail = new CustomException(List.of("Conta nao encontrada!"), HttpStatus.NOT_FOUND.value());
+        return handleExceptionInternal(ex, exceptionDetail, new HttpHeaders(), HttpStatus.NOT_FOUND, request);
+    }
+
 }
