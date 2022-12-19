@@ -14,11 +14,10 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-
-import java.util.List;
 import java.util.Optional;
 
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -40,8 +39,8 @@ class ChavePixServiceTest {
     void setup() {
         chavePixRequest = Factory.createChavePixRequest();
         chavePixResponse = Factory.createChavePixResponse();
+        chavePix = Factory.createChavePix();
     }
-
     @Test
     public void salvarTest() {
 
@@ -56,12 +55,12 @@ class ChavePixServiceTest {
     @Test
     void buscarPorChave() {
         Mockito.when(chavePixRepository.findById(any())).thenReturn(Optional.of(chavePix));
+        Mockito.when(chavePixMapper.modelToResponse(any())).thenReturn(chavePixResponse);
 
-        //List<ChavePixResponse> chavePixResponse2 = chavePixService.buscarPorChave(chavePix);
+        ChavePixResponse chavePixResultado = chavePixService.buscarPorChave(chavePix.getChave());
 
-       // chavePixService.buscarPorChave(chavePixResponse);
-
-
+        assertEquals(chavePixResultado, chavePixResponse);
         Mockito.verify(chavePixRepository, Mockito.times(1)).findById(any());
     }
 }
+

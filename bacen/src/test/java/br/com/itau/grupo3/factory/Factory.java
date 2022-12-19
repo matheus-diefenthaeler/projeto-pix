@@ -2,7 +2,9 @@ package br.com.itau.grupo3.factory;
 
 import br.com.itau.grupo3.dto.request.ChavePixRequest;
 import br.com.itau.grupo3.dto.response.ChavePixResponse;
+import br.com.itau.grupo3.model.ChavePix;
 import br.com.itau.grupo3.model.TipoChavePix;
+import br.com.itau.grupo3.model.TipoConta;
 
 
 public class Factory {
@@ -30,6 +32,21 @@ public class Factory {
         chavePixResponse.getTitular();
         chavePixResponse.getCpfCnpj();
         return chavePixResponse;
+    }
+
+    public static ChavePix createChavePix() {
+        ChavePix chavePix = new ChavePix();
+
+        chavePix.setChave("123321122370");
+        chavePix.setTipo(TipoChavePix.CPFOUCNPJ);
+        chavePix.setTipoConta(TipoConta.CORRENTE);
+        chavePix.setAgencia("1234");
+        chavePix.setConta("321");
+        chavePix.setInstituicaoFinanceira("Itau");
+        chavePix.setTitular("Teste");
+        chavePix.setCpfCnpj("123321123");
+
+        return chavePix;
     }
 
 }
