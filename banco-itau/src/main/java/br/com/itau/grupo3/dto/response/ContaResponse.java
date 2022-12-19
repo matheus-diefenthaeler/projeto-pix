@@ -1,6 +1,5 @@
 package br.com.itau.grupo3.dto.response;
 
-import br.com.itau.grupo3.model.Conta;
 import lombok.Getter;
 import lombok.Setter;
 

@@ -1,7 +1,7 @@
 package br.com.itau.grupo3.service;
 
-import br.com.itau.grupo3.client.ChavePixBacenClient;
-import br.com.itau.grupo3.dto.ChavePixBacenDTO;
+import br.com.itau.grupo3.client.BacenClient;
+import br.com.itau.grupo3.client.dto.ChavePixBacen;
 import br.com.itau.grupo3.dto.request.ChavePixRequest;
 import br.com.itau.grupo3.dto.response.ChavePixResponse;
 import br.com.itau.grupo3.factory.Factory;

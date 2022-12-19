@@ -1,4 +1,4 @@
-package br.com.itau.grupo3.service;
+package br.com.bacen.grupo3.service;
 
 
 import br.com.itau.grupo3.dto.request.ChavePixRequest;

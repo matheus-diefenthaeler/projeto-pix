@@ -1,12 +1,11 @@
 package br.com.itau.grupo3.factory;
 
-import br.com.itau.grupo3.dto.ChavePixBacenDTO;
+import br.com.itau.grupo3.client.dto.ChavePixBacen;
 import br.com.itau.grupo3.dto.request.AgenciaEContaRequest;
 import br.com.itau.grupo3.dto.request.ChavePixRequest;
 import br.com.itau.grupo3.dto.request.ContaRequest;
 import br.com.itau.grupo3.dto.response.ContaResponse;
 import br.com.itau.grupo3.model.*;
-
 
 import java.math.BigDecimal;
 import java.util.ArrayList;

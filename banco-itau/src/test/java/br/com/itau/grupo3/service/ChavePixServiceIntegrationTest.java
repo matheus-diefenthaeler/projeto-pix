@@ -1,7 +1,7 @@
 package br.com.itau.grupo3.service;
 
-import br.com.itau.grupo3.client.ChavePixBacenClient;
-import br.com.itau.grupo3.dto.ChavePixBacenDTO;
+import br.com.itau.grupo3.client.BacenClient;
+import br.com.itau.grupo3.client.dto.ChavePixBacen;
 import br.com.itau.grupo3.dto.request.ChavePixRequest;
 import br.com.itau.grupo3.dto.request.ContaRequest;
 import br.com.itau.grupo3.dto.response.ChavePixResponse;
@@ -19,14 +19,14 @@ import org.springframework.boot.test.context.SpringBootTest;
 public class ChavePixServiceIntegrationTest {
 
     private final ChavePixService chavePixService;
-    private final ChavePixBacenClient chavePixBacenClient;
+    private final BacenClient chavePixBacenClient;
     private final ChavePixRepository chavePixRepository;
     private final ChavePixMapper chavePixMapper;
     private final ContaService contaService;
     private final ContaMapper contaMapper;
 
     @Autowired
-    public ChavePixServiceIntegrationTest(ChavePixService chavePixService, ChavePixBacenClient chavePixBacenClient, ChavePixRepository chavePixRepository, ChavePixMapper chavePixMapper, ContaService contaService, ContaMapper contaMapper) {
+    public ChavePixServiceIntegrationTest(ChavePixService chavePixService, BacenClient chavePixBacenClient, ChavePixRepository chavePixRepository, ChavePixMapper chavePixMapper, ContaService contaService, ContaMapper contaMapper) {
         this.chavePixService = chavePixService;
         this.chavePixBacenClient = chavePixBacenClient;
         this.chavePixRepository = chavePixRepository;
@@ -53,7 +53,7 @@ public class ChavePixServiceIntegrationTest {
         conta.setId(conta.getId());
 
 
-        ChavePixBacenDTO chavePixBacenDTO = chavePixMapper.requestToBacen(chavePixRequest, conta);
+        ChavePixBacen chavePixBacenDTO = chavePixMapper.requestToBacen(chavePixRequest, conta);
         ChavePixResponse chavePixResponse = new ChavePixResponse();
         ChavePix chavePix = new ChavePix();
 

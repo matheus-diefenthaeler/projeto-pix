@@ -1,6 +1,6 @@
 package br.com.itau.grupo3.mapper;
 
-import br.com.itau.grupo3.dto.ChavePixBacenDTO;
+import br.com.itau.grupo3.client.dto.ChavePixBacen;
 import br.com.itau.grupo3.dto.request.ChavePixRequest;
 import br.com.itau.grupo3.factory.Factory;
 import br.com.itau.grupo3.model.ChavePix;
