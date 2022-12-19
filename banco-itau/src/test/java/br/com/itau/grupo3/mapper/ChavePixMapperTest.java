@@ -25,9 +25,9 @@ public class ChavePixMapperTest {
 
     @Test
     public void requestToBacenTest() {
-        ChavePixBacenDTO chavePixBacenDTO = chavePixMapper.requestToBacen(chavePixRequest, conta);
+        ChavePixBacen chavePixBacenDTO = chavePixMapper.requestToBacen(chavePixRequest, conta);
 
-        assertEquals(ChavePixBacenDTO.class, chavePixBacenDTO.getClass());
+        assertEquals(ChavePixBacen.class, chavePixBacenDTO.getClass());
         assertEquals(chavePixRequest.getChave(), chavePixBacenDTO.getChave());
     }
 

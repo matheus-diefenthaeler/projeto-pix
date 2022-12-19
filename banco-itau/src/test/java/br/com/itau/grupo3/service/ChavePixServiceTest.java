@@ -31,7 +31,7 @@ public class ChavePixServiceTest {
     @Mock
     ChavePixRepository chavePixRepository;
     @Mock
-    ChavePixBacenClient chavePixBacenClient;
+    BacenClient chavePixBacenClient;
 
     @Mock
     ContaService contaService;
@@ -41,7 +41,7 @@ public class ChavePixServiceTest {
     static Conta conta;
     static ChavePixRequest chavePixRequest;
     static ChavePix chavePix;
-    static ChavePixBacenDTO chavePixBacenDTO;
+    static ChavePixBacen chavePixBacenDTO;
 
     @BeforeEach
     void setup() {
@@ -54,8 +54,8 @@ public class ChavePixServiceTest {
     void testSalvar() {
         //when
         Mockito.when(contaService.buscarPorId(anyLong())).thenReturn(conta);
-        Mockito.when(chavePixMapper.requestToBacen(any(), any())).thenReturn(new ChavePixBacenDTO());
-        Mockito.when(chavePixBacenClient.cadastrarChavePix(any(ChavePixBacenDTO.class))).thenReturn(ResponseEntity.created(URI.create("")).body(chavePixBacenDTO));
+        Mockito.when(chavePixMapper.requestToBacen(any(), any())).thenReturn(new ChavePixBacen());
+        Mockito.when(chavePixBacenClient.cadastrarChavePix(any(ChavePixBacen.class))).thenReturn(ResponseEntity.created(URI.create("")).body(chavePixBacenDTO));
         Mockito.when(chavePixMapper.requestToModel(any(ChavePixRequest.class), any(Conta.class))).thenReturn(chavePix);
         Mockito.when(chavePixMapper.modelToResponse(chavePix)).thenReturn(new ChavePixResponse("teste@email.com"));
         Mockito.when(chavePixRepository.save(any(ChavePix.class))).thenReturn(chavePix);
@@ -77,7 +77,7 @@ public class ChavePixServiceTest {
         chavePixBacenDTO.setChave(chavePixRequest.getChave());
 
         Mockito.when(chavePixBacenClient.detalharChavePix(any(String.class))).thenReturn(chavePixBacenDTO);
-        ChavePixBacenDTO responsePixClientRetornado = chavePixService.detalharChavePix(chavePixRequest.getChave());
+        ChavePixBacen responsePixClientRetornado = chavePixService.detalharChavePix(chavePixRequest.getChave());
 
         Assertions.assertEquals(responsePixClientRetornado.getChave(), chavePixRequest.getChave());
     }

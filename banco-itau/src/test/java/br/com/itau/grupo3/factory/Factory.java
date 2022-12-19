@@ -57,13 +57,12 @@ public class Factory {
     }
 
 
-    public static ChavePixBacenDTO createChavePixBacenDTO() {
-        ChavePixBacenDTO chavePixBacenDTO = new ChavePixBacenDTO();
+    public static ChavePixBacen createChavePixBacenDTO() {
+        ChavePixBacen chavePixBacenDTO = new ChavePixBacen();
         chavePixBacenDTO.setChave("123321122370");
         chavePixBacenDTO.setTipo(TipoChavePix.CPFOUCNPJ);
         chavePixBacenDTO.setTipoConta(TipoConta.CORRENTE);
         chavePixBacenDTO.setAgencia("1234");
-        chavePixBacenDTO.setConta("321");
         chavePixBacenDTO.setInstituicaoFinanceira("Itau");
         chavePixBacenDTO.setTitular("Teste");
         chavePixBacenDTO.setCpfCnpj("123321123");
