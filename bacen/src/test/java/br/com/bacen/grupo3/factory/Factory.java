@@ -14,7 +14,6 @@ public class Factory {
         chavePixRequest.setChave("teste@email.com");
         chavePixRequest.setTipo(TipoChavePix.EMAIL);
         chavePixRequest.setAgencia("1234");
-        chavePixRequest.setConta("12345");
         chavePixRequest.setInstituicaoFinanceira("Itau");
         chavePixRequest.setTitular("User Test");
         chavePixRequest.setCpfCnpj("12345678901");
@@ -27,7 +26,6 @@ public class Factory {
         chavePixResponse.getTipo();
         chavePixResponse.getTipo();
         chavePixResponse.getAgencia();
-        chavePixResponse.getConta();
         chavePixResponse.getInstituicaoFinanceira();
         chavePixResponse.getTitular();
         chavePixResponse.getCpfCnpj();

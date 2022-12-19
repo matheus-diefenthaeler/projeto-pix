@@ -1,12 +1,12 @@
 package br.com.bacen.grupo3.service;
 
 
-import br.com.itau.grupo3.dto.request.ChavePixRequest;
-import br.com.itau.grupo3.dto.response.ChavePixResponse;
-import br.com.itau.grupo3.factory.Factory;
-import br.com.itau.grupo3.mapper.ChavePixMapper;
-import br.com.itau.grupo3.model.ChavePix;
-import br.com.itau.grupo3.repository.ChavePixRepository;
+import br.com.bacen.grupo3.dto.request.ChavePixRequest;
+import br.com.bacen.grupo3.dto.response.ChavePixResponse;
+import br.com.bacen.grupo3.factory.Factory;
+import br.com.bacen.grupo3.mapper.ChavePixMapper;
+import br.com.bacen.grupo3.model.ChavePix;
+import br.com.bacen.grupo3.repository.ChavePixRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
