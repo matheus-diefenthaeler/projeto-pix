@@ -55,4 +55,10 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
         return handleExceptionInternal(ex, exceptionDetail, new HttpHeaders(), HttpStatus.NOT_FOUND, request);
     }
 
+    @ExceptionHandler(value = {ContaJaCadastradaException.class})
+    protected ResponseEntity<Object> handlerContaJaCadastrada( RuntimeException ex, WebRequest request) {
+        CustomException exceptionDetail = new CustomException(List.of("Conta já cadastrada !"), HttpStatus.BAD_REQUEST.value());
+        return handleExceptionInternal(ex, exceptionDetail, new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
+    }
+
 }

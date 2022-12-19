@@ -6,6 +6,7 @@ import br.com.itau.grupo3.dto.request.AgenciaEContaRequest;
 import br.com.itau.grupo3.dto.request.ContaRequest;
 import br.com.itau.grupo3.dto.response.ContaResponse;
 import br.com.itau.grupo3.exception.BancoNaoExistenteException;
+import br.com.itau.grupo3.exception.ContaJaCadastradaException;
 import br.com.itau.grupo3.exception.ContaNaoEncontradaException;
 import br.com.itau.grupo3.mapper.ContaMapper;
 import br.com.itau.grupo3.model.Banco;
@@ -14,6 +15,7 @@ import br.com.itau.grupo3.model.ContaValida;
 import br.com.itau.grupo3.repository.BancoRepository;
 import br.com.itau.grupo3.repository.ContaRepository;
 import jakarta.transaction.Transactional;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -30,7 +32,10 @@ public class ContaService {
     private final ContaMapper contaMapper;
 
     @Transactional
-    public ContaResponse adicionar(ContaRequest contaRequest) {
+    public ContaResponse adicionar(@Valid ContaRequest contaRequest) {
+        if(isContaCadastrada(contaRequest.getNumeroConta())){
+            throw new ContaJaCadastradaException();
+        }
         Banco banco = bancoRepository.findAll()
                 .stream()
                 .findFirst()
@@ -99,6 +104,9 @@ public class ContaService {
         Conta conta = buscarPorAgenciaEConta(contaParaCreditarBacenRequest.getAgencia(), contaParaCreditarBacenRequest.getNumeroConta());
         conta.setSaldo(conta.getSaldo().add(contaParaCreditarBacenRequest.getValorParaCreditar()));
         contaRepository.save(conta);
+    }
+    private Boolean isContaCadastrada(String numeroConta){
+        return contaRepository.findByNumeroConta(numeroConta).isPresent();
     }
 }
 

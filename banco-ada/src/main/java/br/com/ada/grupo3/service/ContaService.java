@@ -6,6 +6,7 @@ import br.com.ada.grupo3.dto.request.AgenciaEContaRequest;
 import br.com.ada.grupo3.dto.request.ContaRequest;
 import br.com.ada.grupo3.dto.response.ContaResponse;
 import br.com.ada.grupo3.exception.BancoNaoExistenteException;
+import br.com.ada.grupo3.exception.ContaJaCadastradaException;
 import br.com.ada.grupo3.exception.ContaNaoEncontradaException;
 import br.com.ada.grupo3.mapper.ContaMapper;
 import br.com.ada.grupo3.model.Banco;
@@ -31,6 +32,9 @@ public class ContaService {
 
     @Transactional
     public ContaResponse adicionar(ContaRequest contaRequest) {
+        if(isContaCadastrada(contaRequest.getNumeroConta())){
+            throw new ContaJaCadastradaException();
+        }
         Banco banco = bancoRepository.findAll()
                 .stream()
                 .findFirst()
@@ -99,6 +103,10 @@ public class ContaService {
         Conta conta = buscarPorAgenciaEConta(contaParaCreditarBacenRequest.getAgencia(), contaParaCreditarBacenRequest.getNumeroConta());
         conta.setSaldo(conta.getSaldo().add(contaParaCreditarBacenRequest.getValorParaCreditar()));
         contaRepository.save(conta);
+    }
+
+    private Boolean isContaCadastrada(String numeroConta){
+        return contaRepository.findByNumeroConta(numeroConta).isPresent();
     }
 }
 

@@ -25,6 +25,9 @@ public class ChavePixService {
 
     public ChavePixResponse salvar(ChavePixRequest chavePixRequest) {
         try {
+            if(isChavePixCadastrada(chavePixRequest.getChave())){
+                throw new CadastroChavePixException();
+            }
             Conta conta = contaService.buscarPorId(chavePixRequest.getContaId());
             ChavePixBacen chavePixBacenDTO = chavePixMapper.requestToBacen(chavePixRequest, conta);
             chavePixBacenClient.cadastrarChavePix(chavePixBacenDTO);
@@ -52,4 +55,9 @@ public class ChavePixService {
         ChavePix chavePixSalva = buscarChavePix(chavePix);
         return chavePixSalva.getConta() == conta;
     }
+
+    public Boolean isChavePixCadastrada(String chavePix){
+        return chavePixRepository.findByChave(chavePix).isPresent();
+    }
+
 }
