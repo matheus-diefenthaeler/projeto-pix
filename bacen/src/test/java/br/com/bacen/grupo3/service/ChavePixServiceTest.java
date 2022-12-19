@@ -25,7 +25,6 @@ class ChavePixServiceTest {
 
     @InjectMocks
     ChavePixService chavePixService;
-
     @Mock
     ChavePixRepository chavePixRepository;
     @Mock

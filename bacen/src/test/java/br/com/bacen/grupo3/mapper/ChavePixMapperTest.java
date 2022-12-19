@@ -13,7 +13,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(MockitoExtension.class)
 class ChavePixMapperTest {
-
     static ChavePix chavePix;
     static ChavePixMapper chavePixMapper;
     static ChavePixRequest chavePixRequest;
@@ -24,17 +23,13 @@ class ChavePixMapperTest {
         chavePix = new ChavePix();
         chavePixRequest = Factory.createChavePixRequest();
     }
-
-
     @Test
     void requestToModelTest() {
         ChavePix chavePix = chavePixMapper.requestToModel(chavePixRequest);
 
         assertEquals(ChavePix.class, chavePix.getClass());
         assertEquals(ChavePixRequest.class, chavePixRequest.getClass());
-
     }
-
     @Test
     void modelToResponseTest() {
         ChavePixResponse chavePixResponse = chavePixMapper.modelToResponse(chavePix);

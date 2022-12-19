@@ -47,18 +47,13 @@ public class ChavePixServiceIntegrationTest {
         contaRequest.setNumeroConta("2022");
 
         contaService.adicionar(contaRequest);
-//        ContaResponse contaResponse = contaService.buscarPorAgenciaEConta();
 
         Conta conta = new Conta();
         conta.setId(conta.getId());
 
-
         ChavePixBacen chavePixBacenDTO = chavePixMapper.requestToBacen(chavePixRequest, conta);
         ChavePixResponse chavePixResponse = new ChavePixResponse();
         ChavePix chavePix = new ChavePix();
-
-
     }
 
-    void testDetalharChavePix(){}
 }

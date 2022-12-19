@@ -32,22 +32,16 @@ import static org.mockito.Mockito.*;
 public class ContaServiceTest {
     @InjectMocks
     ContaService contaService;
-
     @Mock
     ContaRepository contaRepository;
-
     @Mock
     BancoRepository bancoRepository;
-
     @Mock
     ContaMapper contaMapper;
-
     static Conta conta;
     static Banco banco;
     static List<Banco> bancoList;
-
     static ContaRequest contaRequest;
-
     static ContaResponse contaResponse;
     static AgenciaEContaRequest agenciaEContaRequest;
 
@@ -95,9 +89,8 @@ public class ContaServiceTest {
 
         assertNotNull(response);
         assertEquals(1, response.size());
-       // assertEquals(ContaResponse.class, response.get(0).getClass());
-    }
 
+    }
     @Test
     public void buscaPorAgenciaAndContaTest() {
          when(contaRepository.findByAgenciaAndNumeroConta(agenciaEContaRequest.getAgencia(), agenciaEContaRequest.getNumeroConta())).thenReturn(Optional.of(conta));
@@ -112,8 +105,6 @@ public class ContaServiceTest {
 
 
     }
-
-
     @Test
     public void removerTest() {
         when(contaRepository.findById(anyLong())).thenReturn(Optional.of(conta));

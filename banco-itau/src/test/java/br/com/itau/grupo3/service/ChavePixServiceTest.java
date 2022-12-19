@@ -35,7 +35,6 @@ public class ChavePixServiceTest {
 
     @Mock
     ContaService contaService;
-
     @Mock
     ChavePixMapper chavePixMapper;
 
@@ -51,7 +50,6 @@ public class ChavePixServiceTest {
         chavePix = Factory.createChavePix();
         chavePixBacenDTO = Factory.createChavePixBacenDTO();
     }
-
     @Test
     void testSalvar() {
         //when
@@ -73,7 +71,6 @@ public class ChavePixServiceTest {
         Mockito.verify(chavePixMapper, Mockito.times(1)).modelToResponse(any());
         Mockito.verify(chavePixRepository, Mockito.times(1)).save(any());
     }
-
     @Test
     void testDetalharChavePix() {
 
