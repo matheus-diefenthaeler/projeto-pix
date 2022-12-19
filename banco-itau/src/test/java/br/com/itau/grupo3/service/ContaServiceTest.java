@@ -1,6 +1,5 @@
 package br.com.itau.grupo3.service;
 
-import br.com.itau.grupo3.dto.ChavePixBacenDTO;
 import br.com.itau.grupo3.dto.request.AgenciaEContaRequest;
 import br.com.itau.grupo3.dto.request.ContaRequest;
 import br.com.itau.grupo3.dto.response.ContaResponse;
@@ -11,7 +10,6 @@ import br.com.itau.grupo3.model.Banco;
 import br.com.itau.grupo3.model.Conta;
 import br.com.itau.grupo3.repository.BancoRepository;
 import br.com.itau.grupo3.repository.ContaRepository;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -24,7 +22,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.List;
 import java.util.Optional;
 
-import static javax.swing.text.html.parser.DTDConstants.ID;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.*;
@@ -66,7 +64,15 @@ public class ContaServiceTest {
     @Test
     @DisplayName("Testa adicao da conta na base")
     public void adicionarTest() {
+        when(bancoRepository.findById(anyLong())).thenReturn(Optional.of(banco));
+        when(contaMapper.requestToModel(any(ContaRequest.class))).thenReturn(conta);
+        when((contaRepository.save(any()))).thenReturn(conta);
 
+        contaService.adicionar(new ContaRequest());
+
+        verify(bancoRepository, times(1)).findById(anyLong());
+        verify(contaMapper, times(1)).requestToModel(any());
+        verify(contaRepository, times(1)).save(any());
     }
 
     @Test
@@ -94,21 +100,19 @@ public class ContaServiceTest {
 
     @Test
     public void buscaPorAgenciaAndContaTest() {
-
          when(contaRepository.findByAgenciaAndNumeroConta(agenciaEContaRequest.getAgencia(), agenciaEContaRequest.getNumeroConta())).thenReturn(Optional.of(conta));
          when(contaMapper.modelToResponse(any(Conta.class))).thenReturn(contaResponse);
 
-        List<ContaResponse> contaResponseSalva = (List<ContaResponse>) contaService.buscarPorAgenciaEConta(agenciaEContaRequest);
+        ContaResponse contaResponseSalva = contaService.buscarPorAgenciaEConta(agenciaEContaRequest);
 
-        assertNotNull(contaResponseSalva);
-        assertEquals(1, contaResponseSalva.size());
-        assertEquals(ContaResponse.class, contaResponseSalva.get(0).getClass());
+        assertEquals(contaResponseSalva,contaResponse);
 
         Mockito.verify(contaRepository, Mockito.times(1)).findByAgenciaAndNumeroConta(agenciaEContaRequest.getAgencia(), agenciaEContaRequest.getNumeroConta());
         Mockito.verify(contaMapper, Mockito.times(1)).modelToResponse(any(Conta.class));
 
 
     }
+
 
     @Test
     public void removerTest() {
