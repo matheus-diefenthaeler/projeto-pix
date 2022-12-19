@@ -15,7 +15,6 @@ import br.com.itau.grupo3.model.ContaValida;
 import br.com.itau.grupo3.repository.BancoRepository;
 import br.com.itau.grupo3.repository.ContaRepository;
 import jakarta.transaction.Transactional;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -32,24 +31,22 @@ public class ContaService {
     private final ContaMapper contaMapper;
 
     @Transactional
-    public ContaResponse adicionar(@Valid ContaRequest contaRequest) {
+    public ContaResponse adicionar(ContaRequest contaRequest) {
         if(isContaCadastrada(contaRequest.getNumeroConta())){
             throw new ContaJaCadastradaException();
         }
-        Banco banco = bancoRepository.findAll()
-                .stream()
-                .findFirst()
-                .orElseThrow(() -> {
+        Banco banco = bancoRepository.findById(1L).orElseThrow(() -> {
             throw new BancoNaoExistenteException();
         });
         Conta conta = contaMapper.requestToModel(contaRequest);
         conta.setBanco(banco);
-        return new ContaResponse(contaRepository.save(conta));
+         return contaMapper.modelToResponse(contaRepository.save(conta));
     }
 
     public List<ContaResponse> listar() {
         List<Conta> contas = contaRepository.findAll();
-        return contas.stream().map(ContaResponse::new).collect(Collectors.toList());
+        return contas.stream().map(contaMapper::modelToResponse)
+                .collect(Collectors.toList());
     }
 
     public Conta buscarPorId(Long id) {
@@ -71,7 +68,7 @@ public class ContaService {
 
     public ContaResponse buscarPorAgenciaEConta(AgenciaEContaRequest agenciaEContaRequest) {
         Conta conta = buscarPorAgenciaEConta(agenciaEContaRequest.getAgencia(), agenciaEContaRequest.getNumeroConta());
-        return new ContaResponse(conta);
+        return contaMapper.modelToResponse(conta);
     }
 
     private Conta buscarPorAgenciaEConta(String agencia, String numeroConta) {

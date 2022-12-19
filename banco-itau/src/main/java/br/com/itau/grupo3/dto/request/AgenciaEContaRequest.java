@@ -1,14 +1,13 @@
 package br.com.itau.grupo3.dto.request;
 
 import jakarta.validation.constraints.NotBlank;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 
 @Getter
-@NoArgsConstructor
-@AllArgsConstructor
+@Setter
+
 public class AgenciaEContaRequest {
     @NotBlank
     private String agencia;
