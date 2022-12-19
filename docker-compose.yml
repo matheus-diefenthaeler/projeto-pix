@@ -1,34 +1,51 @@
 version: '3.3'
 
 services:
-#  eureka:
-#    container_name: eureka
+  eureka:
+    container_name: eureka
+    build:
+      context: ./eureka
+      dockerfile: Dockerfile
+    restart: always
+    networks:
+      - backend
+    ports:
+      - 8761:8761
+
+  bacen:
+    container_name: bacen
+    build:
+      context: ./bacen
+      dockerfile: Dockerfile
+    restart: always
+    ports:
+      - 8080:8080
+    networks:
+      - backend
+    depends_on:
+      - eureka
+
+  banco-itau:
+    container_name: banco-itau
+    build:
+      context: ./banco-itau
+      dockerfile: Dockerfile
+    restart: always
+    ports:
+      - 8081:8081
+    networks:
+      - backend
+    depends_on:
+      - eureka
+
+#  banco-ada:
+#    container_name: banco-ada
 #    build:
-#      context: ./eureka
+#      context: ./banco-ada
 #      dockerfile: Dockerfile
 #    restart: always
-#    networks:
-#      - backend
 #    ports:
-#      - 8761:8761
-#
-#  bacen:
-#    container_name: bacen
-#    build:
-#      context: ./bacen
-#      dockerfile: Dockerfile
-#    restart: always
-#    networks:
-#      - backend
-#    depends_on:
-#      - eureka
-#
-#  banco-itau:
-#    container_name: banco-itau
-#    build:
-#      context: ./banco-itau
-#      dockerfile: Dockerfile
-#    restart: always
+#      - 8082:8082
 #    networks:
 #      - backend
 #    depends_on:
