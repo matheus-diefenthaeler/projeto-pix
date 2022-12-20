@@ -6,6 +6,7 @@ import br.com.itau.grupo3.dto.request.AgenciaEContaRequest;
 import br.com.itau.grupo3.dto.request.ContaRequest;
 import br.com.itau.grupo3.dto.response.ContaResponse;
 import br.com.itau.grupo3.exception.BancoNaoExistenteException;
+import br.com.itau.grupo3.exception.ContaJaCadastradaException;
 import br.com.itau.grupo3.exception.ContaNaoEncontradaException;
 import br.com.itau.grupo3.mapper.ContaMapper;
 import br.com.itau.grupo3.model.Banco;
@@ -31,20 +32,21 @@ public class ContaService {
 
     @Transactional
     public ContaResponse adicionar(ContaRequest contaRequest) {
-        Banco banco = bancoRepository.findAll()
-                .stream()
-                .findFirst()
-                .orElseThrow(() -> {
+        if(isContaCadastrada(contaRequest.getNumeroConta())){
+            throw new ContaJaCadastradaException();
+        }
+        Banco banco = bancoRepository.findById(1L).orElseThrow(() -> {
             throw new BancoNaoExistenteException();
         });
         Conta conta = contaMapper.requestToModel(contaRequest);
         conta.setBanco(banco);
-        return new ContaResponse(contaRepository.save(conta));
+         return contaMapper.modelToResponse(contaRepository.save(conta));
     }
 
     public List<ContaResponse> listar() {
         List<Conta> contas = contaRepository.findAll();
-        return contas.stream().map(ContaResponse::new).collect(Collectors.toList());
+        return contas.stream().map(contaMapper::modelToResponse)
+                .collect(Collectors.toList());
     }
 
     public Conta buscarPorId(Long id) {
@@ -66,7 +68,7 @@ public class ContaService {
 
     public ContaResponse buscarPorAgenciaEConta(AgenciaEContaRequest agenciaEContaRequest) {
         Conta conta = buscarPorAgenciaEConta(agenciaEContaRequest.getAgencia(), agenciaEContaRequest.getNumeroConta());
-        return new ContaResponse(conta);
+        return contaMapper.modelToResponse(conta);
     }
 
     private Conta buscarPorAgenciaEConta(String agencia, String numeroConta) {
@@ -99,6 +101,9 @@ public class ContaService {
         Conta conta = buscarPorAgenciaEConta(contaParaCreditarBacenRequest.getAgencia(), contaParaCreditarBacenRequest.getNumeroConta());
         conta.setSaldo(conta.getSaldo().add(contaParaCreditarBacenRequest.getValorParaCreditar()));
         contaRepository.save(conta);
+    }
+    private Boolean isContaCadastrada(String numeroConta){
+        return contaRepository.findByNumeroConta(numeroConta).isPresent();
     }
 }
 

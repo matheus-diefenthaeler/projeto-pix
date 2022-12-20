@@ -9,6 +9,7 @@ import br.com.itau.grupo3.exception.ChaveNaoEncontradaException;
 import br.com.itau.grupo3.mapper.ChavePixMapper;
 import br.com.itau.grupo3.model.ChavePix;
 import br.com.itau.grupo3.model.Conta;
+import br.com.itau.grupo3.model.TipoChavePix;
 import br.com.itau.grupo3.repository.ChavePixRepository;
 import feign.FeignException;
 import lombok.RequiredArgsConstructor;
@@ -25,6 +26,9 @@ public class ChavePixService {
 
     public ChavePixResponse salvar(ChavePixRequest chavePixRequest) {
         try {
+            if(isChavePixCadastrada(chavePixRequest.getChave())){
+                throw new CadastroChavePixException();
+            }
             Conta conta = contaService.buscarPorId(chavePixRequest.getContaId());
             ChavePixBacen chavePixBacenDTO = chavePixMapper.requestToBacen(chavePixRequest, conta);
             chavePixBacenClient.cadastrarChavePix(chavePixBacenDTO);
@@ -52,4 +56,9 @@ public class ChavePixService {
         ChavePix chavePixSalva = buscarChavePix(chavePix);
         return chavePixSalva.getConta() == conta;
     }
+
+    public Boolean isChavePixCadastrada(String chavePix){
+        return chavePixRepository.findByChave(chavePix).isPresent();
+    }
+
 }

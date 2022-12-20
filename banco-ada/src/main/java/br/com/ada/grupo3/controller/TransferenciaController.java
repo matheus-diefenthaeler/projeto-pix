@@ -3,6 +3,7 @@ package br.com.ada.grupo3.controller;
 import br.com.ada.grupo3.client.dto.response.TransferenciaBacenResponse;
 import br.com.ada.grupo3.dto.request.TransferenciaRequest;
 import br.com.ada.grupo3.service.TransferenciaService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,7 +19,7 @@ public class TransferenciaController {
     private final TransferenciaService transferenciaService;
 
     @PostMapping
-    public ResponseEntity<TransferenciaBacenResponse> transferir(@RequestBody TransferenciaRequest transferenciaRequest) {
+    public ResponseEntity<TransferenciaBacenResponse> transferir(@RequestBody @Valid TransferenciaRequest transferenciaRequest) {
         TransferenciaBacenResponse transferenciaBacenResponse = transferenciaService.transferir(transferenciaRequest);
         return ResponseEntity.ok().body(transferenciaBacenResponse);
     }
