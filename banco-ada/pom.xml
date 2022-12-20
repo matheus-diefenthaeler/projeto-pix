@@ -11,6 +11,7 @@
     <groupId>br.com.ada.grupo3</groupId>
     <artifactId>banco-ada</artifactId>
     <version>0.0.1-SNAPSHOT</version>
+    <packaging>jar</packaging>
     <name>banco-ada</name>
     <description>Banco Ada</description>
     <properties>

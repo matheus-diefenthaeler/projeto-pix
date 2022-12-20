@@ -11,6 +11,7 @@
     <groupId>br.com.itau.grupo3</groupId>
     <artifactId>bacen</artifactId>
     <version>0.0.1-SNAPSHOT</version>
+    <packaging>jar</packaging>
     <name>bacen</name>
     <description>Bacen</description>
     <properties>

@@ -1,55 +1,60 @@
 version: '3.3'
 
 services:
-#  eureka:
-#    container_name: eureka
-#    build:
-#      context: ./eureka
-#      dockerfile: Dockerfile
-#    restart: always
-#    networks:
-#      - backend
-#    ports:
-#      - 8761:8761
-#
-#  bacen:
-#    container_name: bacen
-#    build:
-#      context: ./bacen
-#      dockerfile: Dockerfile
-#    restart: always
-#    ports:
-#      - 8080:8080
-#    networks:
-#      - backend
-#    depends_on:
-#      - eureka
-#
-#  banco-itau:
-#    container_name: banco-itau
-#    build:
-#      context: ./banco-itau
-#      dockerfile: Dockerfile
-#    restart: always
-#    ports:
-#      - 8081:8081
-#    networks:
-#      - backend
-#    depends_on:
-#      - eureka
+  eureka:
+    container_name: eureka
+    build:
+      context: ./eureka
+      dockerfile: Dockerfile
+    restart: "no"
+    networks:
+      - backend
+    ports:
+      - 8761:8761
 
-#  banco-ada:
-#    container_name: banco-ada
-#    build:
-#      context: ./banco-ada
-#      dockerfile: Dockerfile
-#    restart: always
-#    ports:
-#      - 8082:8082
-#    networks:
-#      - backend
-#    depends_on:
-#      - eureka
+  bacen:
+    container_name: bacen
+    build:
+      context: ./bacen
+      dockerfile: Dockerfile
+    restart: "no"
+    ports:
+      - 8080:8080
+    networks:
+      - backend
+    depends_on:
+      - eureka
+      - dynamodb
+
+  banco-itau:
+    container_name: banco-itau
+    build:
+      context: ./banco-itau
+      dockerfile: Dockerfile
+    restart: "no"
+    ports:
+      - 8081:8081
+    networks:
+      - backend
+    depends_on:
+      - eureka
+      - postgres
+      - bacen
+
+  banco-ada:
+    container_name: banco-ada
+    build:
+      context: ./banco-ada
+      dockerfile: Dockerfile
+    restart: "no"
+    ports:
+      - 8082:8082
+    networks:
+      - backend
+    depends_on:
+      - eureka
+      - postgres
+      - bacen
 
   postgres:
     image: postgres:15.1-alpine
@@ -58,13 +63,17 @@ services:
       POSTGRES_USER: "postgres"
       POSTGRES_PASSWORD: "1234"
       POSTGRES_DB: "banco-itau"
+    networks:
+      - backend
     ports:
       - 5432:5432
+    expose:
+      - 5432
 
   prometheus:
     container_name: pix-prometheus
     image: prom/prometheus
-    restart: always
+    restart: "no"
     ports:
       - 9090:9090
     networks:
@@ -77,7 +86,7 @@ services:
   grafana:
     container_name: pix-grafana
     image: grafana/grafana
-    restart: always
+    restart: "no"
     networks:
       - backend
     ports:
@@ -97,8 +106,12 @@ services:
     command: "-jar DynamoDBLocal.jar -sharedDb -dbPath ./data"
     image: "amazon/dynamodb-local:latest"
     container_name: dynamodb
+    networks:
+      - backend
     ports:
       - 8000:8000
+    expose:
+      - 8000
     volumes:
       - "./data/dynamodb:/home/dynamodblocal/data"
     working_dir: /home/dynamodblocal
