@@ -41,23 +41,6 @@ public class DynamoDBTable {
 
         createTableRequest.setKeySchema(tableKeySchema);
 
-//        ArrayList<KeySchemaElement> indexKeySchema = new ArrayList<KeySchemaElement>();
-//        indexKeySchema.add(new KeySchemaElement().withAttributeName("conta").withKeyType(KeyType.HASH));  //Partition key
-//        indexKeySchema.add(new KeySchemaElement().withAttributeName("tipo").withKeyType(KeyType.RANGE));  //Sort key
-//
-//        Projection projection = new Projection().withProjectionType(ProjectionType.INCLUDE);
-//        ArrayList<String> nonKeyAttributes = new ArrayList<String>();
-//        nonKeyAttributes.add("chave");
-//        projection.setNonKeyAttributes(nonKeyAttributes);
-//
-//        LocalSecondaryIndex localSecondaryIndex = new LocalSecondaryIndex()
-//                .withIndexName("ContaTipoIndex").withKeySchema(indexKeySchema).withProjection(projection);
-//
-//        ArrayList<LocalSecondaryIndex> localSecondaryIndexes = new ArrayList<LocalSecondaryIndex>();
-//        localSecondaryIndexes.add(localSecondaryIndex);
-//        createTableRequest.setLocalSecondaryIndexes(localSecondaryIndexes);
-
-
         GlobalSecondaryIndex contaTipoIndex = new GlobalSecondaryIndex().withIndexName("ContaTipoIndex")
                 .withProvisionedThroughput(pt)
                 .withKeySchema(new KeySchemaElement().withAttributeName("conta").withKeyType(KeyType.HASH), // Partition
