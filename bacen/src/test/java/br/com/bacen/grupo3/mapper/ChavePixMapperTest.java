@@ -7,11 +7,9 @@ import br.com.bacen.grupo3.model.ChavePix;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @ExtendWith(MockitoExtension.class)
 class ChavePixMapperTest {
@@ -22,9 +20,10 @@ class ChavePixMapperTest {
     @BeforeEach
     void setup() {
         chavePixMapper = new ChavePixMapper();
-        chavePix = new ChavePix();
+        chavePix = Factory.createChavePix();
         chavePixRequest = Factory.createChavePixRequest();
     }
+
     @Test
     void requestToModelTest() {
         ChavePix chavePix = chavePixMapper.requestToModel(chavePixRequest);
@@ -32,6 +31,7 @@ class ChavePixMapperTest {
         assertEquals(ChavePix.class, chavePix.getClass());
         assertEquals(ChavePixRequest.class, chavePixRequest.getClass());
     }
+
     @Test
     void modelToResponseTest() {
         ChavePixResponse chavePixResponse = chavePixMapper.modelToResponse(chavePix);
